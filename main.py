@@ -1,3 +1,5 @@
+import networkx as nx
+
 def main():
     print("Projekt 17: kurier \n")
     print("Wybierz metodę wrzucenia danych: \n")
