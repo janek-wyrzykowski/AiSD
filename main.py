@@ -14,7 +14,7 @@ def main():
             break
 
     if wybor == '2':
-        #tu wywolujemy funkcje ktora
+        #tu wywolujemy funkcje ktora zrobi cos
         print("ehe")
     else:
         print("miau")
