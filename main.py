@@ -1,4 +1,12 @@
 import networkx as nx
+import random
+import numpy
+
+
+def graphgeneration(ulice):
+    g = nx.Graph()
+
+
 
 def main():
     print("Projekt 17: kurier \n")
@@ -14,8 +22,38 @@ def main():
             break
 
     if wybor == '2':
-        #tu wywolujemy funkcje ktora zrobi cos
-        print("ehe")
+        liczba_skrzyzowan = random.randint(1,100)
+        n = ((liczba_skrzyzowan-1)*(liczba_skrzyzowan))/2
+        if n > 300:
+            n = 300
+
+        liczba_ulic = random.randint(liczba_skrzyzowan, n)
+        ulice = [[0 for i in range(liczba_skrzyzowan)] for i in range(liczba_skrzyzowan)]
+
+        for i in range(2):
+            for j in range(liczba_skrzyzowan):
+                y = random.randint(1, liczba_skrzyzowan-1)
+                while y == j or ulice[j][y] != 0:
+                    y = random.randint(1, liczba_skrzyzowan-1)
+
+                ulice[j][y] = random.randint(1, 100)
+                ulice[y][j] = ulice[j][y]
+
+        m = liczba_ulic - liczba_skrzyzowan
+        if m > 0:
+            for i in range(m-1):
+                y = random.randint(1, liczba_skrzyzowan - 1)
+                x = random.randint(1, liczba_skrzyzowan - 1)
+                while y == x or ulice[x][y] != 0:
+                    y = random.randint(1, liczba_skrzyzowan - 1)
+
+                ulice[x][y] = random.randint(1, 100)
+                ulice[y][x] = ulice[x][y]
+
+        print(ulice)
+        ulice = numpy.array(ulice)
+        print(nx.from_numpy_array(ulice))
+
     else:
         print("Podaj liczbę skrzyżowań (1 <= n <= 100)")
         while True:
@@ -47,17 +85,13 @@ def main():
         print("\n c - czas przejazdu")
         print("\n Jeżeli ulica istnieje już między dwoma punktami, to nie można jej nadpisać.")
         print("\n Przechodzimy do wpisywania:")
-        lista = []
+
         for i in range(numer_ulic):
             podane = list(map(int, input("").strip().split(',')))[:numer_ulic]
-            if podane[0] == podane[1]:
-                print("Niepoprawna ulica. Ponów wpisanie danych")
-                i -= 1
-                continue
-            if ulice[podane[0]-1][podane[1]-1] != 0:
-                print("Dana ulica już istnieje! Ponów wpisanie danych")
-                i -= 1
-                continue
+            if podane[0] == podane[1] or ulice[podane[0]-1][podane[1]-1] != 0:
+                while podane[0] == podane[1] or ulice[podane[0]-1][podane[1]-1] != 0:
+                    print("Niepoprawna ulica. Ponów wpisanie danych")
+                    podane = list(map(int, input("").strip().split(',')))[:numer_ulic]
 
             ulice[podane[0]-1][podane[1]-1] = podane[2]
             ulice[podane[1] - 1][podane[0] - 1] = podane[2]
