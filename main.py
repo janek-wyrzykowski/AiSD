@@ -1,7 +1,7 @@
 import networkx as nx
 import random
 import numpy
-
+import matplotlib.pyplot as plt
 
 def graphgeneration(ulice):
     g = nx.Graph()
@@ -52,7 +52,21 @@ def main():
 
         print(ulice)
         ulice = numpy.array(ulice)
-        print(nx.from_numpy_array(ulice))
+        ulice = nx.from_numpy_array(ulice)
+        print(ulice)
+        nx.draw(ulice)
+        plt.show()
+        print(ulice.edges)
+        # pos = nx.spring_layout(ulice)
+        #
+        # plt.figure(figsize=(7, 7))
+        # for k, p in pos.items():
+        #     plt.scatter(p[0], p[1], marker='o', c='red', s=50, edgecolor='black')
+        # # lgd = plt.legend(markers, labels, numpoints=1, bbox_to_anchor=(1.17, 0.5))
+        # plt.tight_layout()
+        # plt.axis('equal')
+        # plt.show()
+        # print(nx.from_numpy_array(ulice))
 
     else:
         print("Podaj liczbę skrzyżowań (1 <= n <= 100)")
