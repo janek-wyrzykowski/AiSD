@@ -2,6 +2,7 @@ import networkx as nx
 import random
 import numpy
 import matplotlib.pyplot as plt
+import algorithms as alg
 
 def graphgeneration(ulice):
     g = nx.Graph()
@@ -49,6 +50,9 @@ def main():
 
                 ulice[x][y] = random.randint(1, 100)
                 ulice[y][x] = ulice[x][y]
+
+        toVisit = [0] + [random.randint(0,1) for i in range(liczba_skrzyzowan-1)]
+
 
         print(ulice)
         ulice = numpy.array(ulice)
@@ -110,6 +114,19 @@ def main():
             ulice[podane[0]-1][podane[1]-1] = podane[2]
             ulice[podane[1] - 1][podane[0] - 1] = podane[2]
 
+        print('Przechodzimy do wybrania skrzyżowań do których musi dojechać kurier.')
+        print('Proszę najpierw podać liczbę skrzyżowań, które musi odwiedzić dostawca:')
+        liczba_do_odwiedzenia = int(input(''))
+        while  0 >= liczba_do_odwiedzenia or liczba_do_odwiedzenia > liczba_skrzyzowan:
+            print('Niepoprawna liczba skrzyżowań do odwiedzenia. Wpisz liczbę ponownie.')
+            liczba_do_odwiedzenia = int(input(''))
+
+        print("Teraz nastąpi podawanie skrzyżowań. Skrzyżowania należy podawać w formacie 'a,b,c,d,...' ")
+        print("NIE MOŻNA wybierać skrzyżowania 0, ponieważ to jest adres bazy.")
+        odwiedzane = list(map(int, input("").strip().split(',')))[:numer_ulic]
+        if len(odwiedzane) != liczba_do_odwiedzenia or min(odwiedzane) <= 0 or max(odwiedzane) >= liczba_skrzyzowan - 1 \
+                or odwiedzane[0] == 0:
+                raise Exception('błędne dane')
         print(ulice)
 
 if __name__ == "__main__":
