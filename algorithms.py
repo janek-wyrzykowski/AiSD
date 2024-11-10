@@ -68,28 +68,80 @@ def solve_traveling_salesman(g: nx.Graph) -> list[int]:
         `nodes_order` (`list[int]`): lista wierzchołków ułożonych w optymalnej kolejności.
     """
     # Stosujemy podejście hybrydowe: dla małych grafów przeprowadzamy algorytm naiwny, a dla większych trochę bardziej wyszukany
-    if len(g.nodes) <= 10:
-        # Algorytm naiwny
+    n = len(g.nodes)
+
+    if n <= 10:
+        # Algorytm naiwny: bruteforce
+
         min_length = float('inf')
         min_path = []
+
         for perm in itertools.permutations(set(g.nodes) - {1}):
-            tmp_path = list(perm).insert(0, 1).append(1)
+            tmp_path = list(perm)
             tmp_length = g[1][tmp_path[0]]['weight'] + sum([g[tmp_path[i]][tmp_path[i+1]]['weight'] for i in range(len(tmp_path)-2)]) + g[tmp_path[len(tmp_path)-1]][1]['weight']
+
             if tmp_length < min_length:
                 min_length = tmp_length
                 min_path = tmp_path
         return min_path
-    else:
-        # Algorytm wyszukany
-        pass
     
-    # TODO dokończyć algorytm
+    else:
+        # Algorytm wyszukany: Held-Karp
+
+        # Podzbiory zbioru wierzchołków zapsujemy ciągami binarnymi - odpowiadają im koszty ścieżek oraz numer ostatnio odwiedzonego wierzchołka
+        costs = {}
+        # Wpisujemy początkowe odległości dla zbiorów 1-elementowych
+        for k in range(2, n + 1):
+            costs[(1 << k, k)] = (g[1][k]['weight'], 1)
+
+        # Badamy kolejne podzbiory wierzchołków (w kolejności rosnącej rozmiarów podzbiorów) i zapisujemy wyniki pośrednie
+        for set_size in range(2, n):
+            for subset in itertools.combinations(range(2, n + 1), set_size):
+
+                # Zapisujemy podzbiór w notacji bitowej
+                subset_bits = 0
+                for bit in subset:
+                    subset_bits |= 1 << bit
+
+                # Znajdujemy najkrótsze ścieżki przez ten podzbiór kończące się na każdym z wierzchołków k tego podzbioru
+                for k in subset:
+                    subset_prev = subset_bits & ~(1 << k)
+
+                    # Zapisujemy wszystkie ścieżki od 1 do k i wybieramy najkrótszą
+                    paths = []
+                    for m in subset:
+                        # Nie nteresują nas ścieżki, w których poprzednim wierzchołkiem jest 1 lub k 
+                        if m == 1 or m == k:
+                            continue
+                        paths.append((costs[(subset_prev, m)][0] + g[m][k]['weight'], m))
+                    costs[(subset_bits, k)] = min(paths)
+        
+        # Mając obliczone optymalne ścieżki przechodzące przez n wierzchołków, łączymy ich końce i wybieramy najlepszą
+        # Podzbiorem jest teraz zbiór wszystkich wierzchołków oprócz pierwszego 
+        subset_bits = 2**n - 2
+        paths = []
+        for k in range(2, n + 1):
+            paths.append((costs[(subset_bits, k)][0] + g[k][1]['weights'], k))
+        
+        (optimal_len, parent) = min(paths)
+
+        # Pozostaje odtworzyć znaleziony cykl
+        min_path = [1]
+        for i in range(n - 1):
+            min_path.append(parent)
+            new_bits = subset_bits & ~(1 << parent)
+            (_, parent) = costs[(subset_bits, parent)]
+            subset_bits = new_bits
+        min_path.append[1]
+
+        return min_path
 
 
-
+# TODO przetestować działanie solve_traveling_salesman
 # TODO usunąć testy poniżej
 
 g = nx.Graph()
-g.add_nodes_from([(1, {'toVisit': True}), (2, {'toVisit': False}), (3, {'toVisit': True}), (4, {'toVisit': True})])
-g.add_edges_from([(1, 2, {'weight': 1}), (1, 3, {'weight': 2}), (2, 4, {'weight': 2}), (3, 4, {'weight': 1})])
-graph_simplify(g)
+
+h = graph_simplify(g)
+opt_path = solve_traveling_salesman(h)
+print(opt_path)
