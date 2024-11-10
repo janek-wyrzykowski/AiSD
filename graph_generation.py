@@ -1,3 +1,7 @@
+import networkx as nx
+import random
+import numpy
+
 def graph_generation():
     print("Projekt 17: kurier \n")
     print("Wybierz metodę wrzucenia danych: \n")
@@ -11,6 +15,7 @@ def graph_generation():
         else:
             break
 
+    # dane losowe:
     if wybor == '2':
         liczba_skrzyzowan = random.randint(1, 100)
         n = ((liczba_skrzyzowan - 1) * (liczba_skrzyzowan)) / 2
@@ -25,6 +30,7 @@ def graph_generation():
                 y = random.randint(1, liczba_skrzyzowan - 1)
                 while y == j or ulice[j][y] != 0:
                     y = random.randint(1, liczba_skrzyzowan - 1)
+                    #TODO poprawić generację - moze sie zdarzyc ze jakis punkt juz zotał połączony 2+ razy z innyme
 
                 ulice[j][y] = random.randint(1, 100)
                 ulice[y][j] = ulice[j][y]
@@ -42,6 +48,8 @@ def graph_generation():
 
         toVisit = [0] + [random.randint(0, 1) for i in range(liczba_skrzyzowan - 1)]
 
+
+    # dane wpisane ręcznie
     else:
         print("Podaj liczbę skrzyżowań (1 <= n <= 100)")
         while True:
@@ -103,5 +111,6 @@ def graph_generation():
             if i in odwiedzane:
                 toVisit[i] = 1
 
-
+    ulice = numpy.array(ulice)
+    ulice = nx.from_numpy_array(ulice)
     return ulice, toVisit
