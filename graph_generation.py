@@ -27,6 +27,9 @@ def graph_generation():
 
         for i in range(2):
             for j in range(liczba_skrzyzowan):
+                niepuste = sum(x != 0 for x in ulice[j])
+                if niepuste == 2:
+                    continue
                 y = random.randint(1, liczba_skrzyzowan - 1)
                 while y == j or ulice[j][y] != 0:
                     y = random.randint(1, liczba_skrzyzowan - 1)
@@ -42,6 +45,7 @@ def graph_generation():
                 x = random.randint(1, liczba_skrzyzowan - 1)
                 while y == x or ulice[x][y] != 0:
                     y = random.randint(1, liczba_skrzyzowan - 1)
+                    x = random.randint(1, liczba_skrzyzowan - 1)
 
                 ulice[x][y] = random.randint(1, 100)
                 ulice[y][x] = ulice[x][y]
@@ -104,7 +108,7 @@ def graph_generation():
         odwiedzane = list(map(int, input("").strip().split(',')))[:numer_ulic]
         if len(odwiedzane) != liczba_do_odwiedzenia or min(odwiedzane) <= 0 or max(odwiedzane) >= liczba_skrzyzowan - 1 \
                 or odwiedzane[0] == 0:
-                raise Exception('błędne dane')
+                raise Exception('błędne dane. Koniec.')
 
         toVisit = [0 for i in range(liczba_skrzyzowan)]
         for i in range(liczba_skrzyzowan):
