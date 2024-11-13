@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 import graph_generation as gen
 
 def main():
-    [G, tovisit] = gen.graph_generation()
+    G = gen.graph_generation()
 
     print(G)
     nx.draw(G)
 
     plt.show()
-    print(tovisit)
+    print(G.nodes(data=True))
 
 
 if __name__ == "__main__":

@@ -50,7 +50,8 @@ def graph_generation():
                 ulice[x][y] = random.randint(1, 100)
                 ulice[y][x] = ulice[x][y]
 
-        toVisit = [0] + [random.randint(0, 1) for i in range(liczba_skrzyzowan - 1)]
+        toVisit = {i: random.randint(0,1) for i in range(2, liczba_skrzyzowan+1)}
+        toVisit.update({1: 1})
 
 
     # dane wpisane ręcznie
@@ -104,17 +105,18 @@ def graph_generation():
             liczba_do_odwiedzenia = int(input(''))
 
         print("Teraz nastąpi podawanie skrzyżowań. Skrzyżowania należy podawać w formacie 'a,b,c,d,...' ")
-        print("NIE MOŻNA wybierać skrzyżowania 0, ponieważ to jest adres bazy.")
+        print("NIE MOŻNA wybierać skrzyżowania 1, ponieważ to jest adres bazy.")
         odwiedzane = list(map(int, input("").strip().split(',')))[:numer_ulic]
         if len(odwiedzane) != liczba_do_odwiedzenia or min(odwiedzane) <= 0 or max(odwiedzane) >= liczba_skrzyzowan - 1 \
                 or odwiedzane[0] == 0:
                 raise Exception('błędne dane. Koniec.')
 
-        toVisit = [0 for i in range(liczba_skrzyzowan)]
+        toVisit = {i: 0 for i in range(1, liczba_skrzyzowan+1)}
         for i in range(liczba_skrzyzowan):
             if i in odwiedzane:
                 toVisit[i] = 1
 
     ulice = numpy.array(ulice)
-    ulice = nx.from_numpy_array(ulice)
-    return ulice, toVisit
+    ulice = nx.from_numpy_array(ulice, nodelist=range(1, liczba_skrzyzowan+1))
+    nx.set_node_attributes(ulice, toVisit, 'toVisit')
+    return ulice
