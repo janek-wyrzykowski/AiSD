@@ -51,7 +51,7 @@ def graph_generation():
                 ulice[y][x] = ulice[x][y]
 
         toVisit = dict()
-        while sum(toVisit.values()) < 1:
+        while sum(toVisit.values()) < 1 or sum(toVisit.values()) >= 20:
             toVisit = {i: random.randint(0,1) for i in range(2, liczba_skrzyzowan+1)}
         toVisit.update({1: 1})
 
@@ -102,7 +102,7 @@ def graph_generation():
         print('Przechodzimy do wybrania skrzyżowań do których musi dojechać kurier.')
         print('Proszę najpierw podać liczbę skrzyżowań, które musi odwiedzić dostawca:')
         liczba_do_odwiedzenia = int(input(''))
-        while  0 >= liczba_do_odwiedzenia or liczba_do_odwiedzenia > liczba_skrzyzowan:
+        while  0 >= liczba_do_odwiedzenia or liczba_do_odwiedzenia >= 20 or liczba_do_odwiedzenia > liczba_skrzyzowan:
             print('Niepoprawna liczba skrzyżowań do odwiedzenia. Wpisz liczbę ponownie.')
             liczba_do_odwiedzenia = int(input(''))
 
