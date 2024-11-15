@@ -17,7 +17,7 @@ def graph_generation():
 
     # dane losowe:
     if wybor == '2':
-        liczba_skrzyzowan = random.randint(1, 100)
+        liczba_skrzyzowan = random.randint(3, 100)
         n = ((liczba_skrzyzowan - 1) * (liczba_skrzyzowan)) / 2
         if n > 300:
             n = 300
@@ -50,7 +50,9 @@ def graph_generation():
                 ulice[x][y] = random.randint(1, 100)
                 ulice[y][x] = ulice[x][y]
 
-        toVisit = {i: random.randint(0,1) for i in range(2, liczba_skrzyzowan+1)}
+        toVisit = dict()
+        while sum(toVisit.values()) < 1:
+            toVisit = {i: random.randint(0,1) for i in range(2, liczba_skrzyzowan+1)}
         toVisit.update({1: 1})
 
 
