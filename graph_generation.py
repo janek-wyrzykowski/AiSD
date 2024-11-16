@@ -50,10 +50,11 @@ def graph_generation():
                 ulice[x][y] = random.randint(1, 100)
                 ulice[y][x] = ulice[x][y]
 
-        toVisit = dict()
-        while sum(toVisit.values()) < 1 or sum(toVisit.values()) >= 20:
-            toVisit = {i: random.randint(0,1) for i in range(2, liczba_skrzyzowan+1)}
-        toVisit.update({1: 1})
+        to_visit = dict()
+        to_visit_amt = random.randint(1, min(19, liczba_skrzyzowan - 1))
+        to_visit_list = random.sample(range(2, liczba_skrzyzowan + 1), to_visit_amt)
+        to_visit = {i: int(i in to_visit_list) for i in range(2, liczba_skrzyzowan + 1)}
+        to_visit.update({1: 1})
 
 
     # dane wpisane ręcznie
@@ -113,12 +114,12 @@ def graph_generation():
                 or odwiedzane[0] == 0:
                 raise Exception('błędne dane. Koniec.')
 
-        toVisit = {i: 0 for i in range(1, liczba_skrzyzowan+1)}
+        to_visit = {i: 0 for i in range(1, liczba_skrzyzowan+1)}
         for i in range(liczba_skrzyzowan):
             if i in odwiedzane:
-                toVisit[i] = 1
+                to_visit[i] = 1
 
     ulice = numpy.array(ulice)
     ulice = nx.from_numpy_array(ulice, nodelist=range(1, liczba_skrzyzowan+1))
-    nx.set_node_attributes(ulice, toVisit, 'toVisit')
+    nx.set_node_attributes(ulice, to_visit, 'to_visit')
     return ulice
