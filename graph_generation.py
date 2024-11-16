@@ -121,5 +121,5 @@ def graph_generation():
 
     ulice = numpy.array(ulice)
     ulice = nx.from_numpy_array(ulice, nodelist=range(1, liczba_skrzyzowan+1))
-    nx.set_node_attributes(ulice, to_visit, 'to_visit')
+    nx.set_node_attributes(ulice, to_visit, 'toVisit')
     return ulice

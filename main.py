@@ -12,12 +12,13 @@ def main():
     nx.draw(H)
     plt.show()
 
-    print(H.number_of_nodes())
+    # print(H.number_of_nodes())
     # print(G.edges(data=True))
     # print(H.edges(data=True))
 
     path_opt = alg.solve_traveling_salesman(H)
-    print(path_opt)
+    print(f'Optymalna kolejność odwiedzanych klientów: {path_opt}')
+    input('Naciśnij ENTER, aby zamknąć.')
 
 if __name__ == "__main__":
     main()
