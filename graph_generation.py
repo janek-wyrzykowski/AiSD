@@ -28,7 +28,7 @@ def graph_generation():
         for i in range(2):
             for j in range(liczba_skrzyzowan):
                 niepuste = sum(x != 0 for x in ulice[j])
-                if niepuste == 2:
+                if niepuste >= 2:
                     continue
                 y = random.randint(1, liczba_skrzyzowan - 1)
                 while y == j or ulice[j][y] != 0:

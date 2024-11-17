@@ -5,12 +5,12 @@ import graph_generation as gen
 
 def main():
     G = gen.graph_generation()
-    nx.draw(G)
-    plt.show()
+    # nx.draw(G)
+    # plt.show()
     
     H = alg.graph_simplify(G)
-    nx.draw(H)
-    plt.show()
+    # nx.draw(H)
+    # plt.show()
 
     # print(H.number_of_nodes())
     # print(G.edges(data=True))
