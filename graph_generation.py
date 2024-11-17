@@ -30,22 +30,21 @@ def graph_generation():
                 niepuste = sum(x != 0 for x in ulice[j])
                 if niepuste >= 2:
                     continue
-                y = random.randint(1, liczba_skrzyzowan - 1)
+                y = random.randint(0, liczba_skrzyzowan - 1)
                 while y == j or ulice[j][y] != 0:
-                    y = random.randint(1, liczba_skrzyzowan - 1)
-                    #TODO poprawić generację - moze sie zdarzyc ze jakis punkt juz zotał połączony 2+ razy z innyme
+                    y = random.randint(0, liczba_skrzyzowan - 1)
 
                 ulice[j][y] = random.randint(1, 100)
                 ulice[y][j] = ulice[j][y]
 
         m = liczba_ulic - liczba_skrzyzowan
         if m > 0:
-            for i in range(m - 1):
-                y = random.randint(1, liczba_skrzyzowan - 1)
-                x = random.randint(1, liczba_skrzyzowan - 1)
+            for _ in range(m):
+                y = random.randint(0, liczba_skrzyzowan - 1)
+                x = random.randint(0, liczba_skrzyzowan - 1)
                 while y == x or ulice[x][y] != 0:
-                    y = random.randint(1, liczba_skrzyzowan - 1)
-                    x = random.randint(1, liczba_skrzyzowan - 1)
+                    y = random.randint(0, liczba_skrzyzowan - 1)
+                    x = random.randint(0, liczba_skrzyzowan - 1)
 
                 ulice[x][y] = random.randint(1, 100)
                 ulice[y][x] = ulice[x][y]
