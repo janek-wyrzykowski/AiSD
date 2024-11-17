@@ -60,7 +60,7 @@ def graph_generation():
     else:
         print("Podaj liczbę skrzyżowań (1 <= n <= 100)")
         while True:
-            liczba_skrzyzowan = int(input("")) + 1
+            liczba_skrzyzowan = int(input(""))
             if liczba_skrzyzowan < 1 or liczba_skrzyzowan > 100:
                 print("Nieprawidłowy wybór. Wpisz liczbę między 1 a 100.")
             else:
@@ -68,7 +68,7 @@ def graph_generation():
 
         print("Podaj liczbę ulic (1 <= m <= 300)")
         while True:
-            numer_ulic = int(input()) + 1
+            numer_ulic = int(input())
             if numer_ulic < 1 or numer_ulic > 300:
                 print("Nieprawidłowy wybór. Wpisz liczbę między 1 a 300.")
             elif numer_ulic > (((liczba_skrzyzowan-1)*liczba_skrzyzowan)/2):
@@ -89,7 +89,7 @@ def graph_generation():
         print("\n Jeżeli ulica istnieje już między dwoma punktami, to nie można jej nadpisać.")
         print("\n Przechodzimy do wpisywania:")
 
-        for i in range(numer_ulic):
+        for _ in range(numer_ulic):
             podane = list(map(int, input("").strip().split(',')))[:numer_ulic]
             if podane[0] == podane[1] or ulice[podane[0]-1][podane[1]-1] != 0:
                 while podane[0] == podane[1] or ulice[podane[0]-1][podane[1]-1] != 0:
@@ -97,7 +97,7 @@ def graph_generation():
                     podane = list(map(int, input("").strip().split(',')))[:numer_ulic]
 
             ulice[podane[0]-1][podane[1]-1] = podane[2]
-            ulice[podane[1] - 1][podane[0] - 1] = podane[2]
+            ulice[podane[1]-1][podane[0]-1] = podane[2]
 
         print('Przechodzimy do wybrania skrzyżowań do których musi dojechać kurier.')
         print('Proszę najpierw podać liczbę skrzyżowań, które musi odwiedzić dostawca:')
@@ -109,14 +109,15 @@ def graph_generation():
         print("Teraz nastąpi podawanie skrzyżowań. Skrzyżowania należy podawać w formacie 'a,b,c,d,...' ")
         print("NIE MOŻNA wybierać skrzyżowania 1, ponieważ to jest adres bazy.")
         odwiedzane = list(map(int, input("").strip().split(',')))[:numer_ulic]
-        if len(odwiedzane) != liczba_do_odwiedzenia or min(odwiedzane) <= 0 or max(odwiedzane) >= liczba_skrzyzowan - 1 \
+        if len(odwiedzane) != liczba_do_odwiedzenia or min(odwiedzane) <= 1 or max(odwiedzane) > liczba_skrzyzowan \
                 or odwiedzane[0] == 0:
                 raise Exception('błędne dane. Koniec.')
 
         to_visit = {i: 0 for i in range(1, liczba_skrzyzowan+1)}
-        for i in range(liczba_skrzyzowan):
+        for i in range(1, liczba_skrzyzowan+1):
             if i in odwiedzane:
                 to_visit[i] = 1
+        to_visit[1] = 1
 
     ulice = numpy.array(ulice)
     ulice = nx.from_numpy_array(ulice, nodelist=range(1, liczba_skrzyzowan+1))
