@@ -19,8 +19,8 @@ def main():
     nx.draw_networkx_edges(G, pos, edge_color='#003049', alpha=[1 - i/150 for i in G_edge_weights], width=[max(0.2, 2-np.log10(i)) for i in G_edge_weights])
     nx.draw_networkx_labels(G, pos)
 
-    # plt.show()
-    plt.savefig('img/test_6_1.png')
+    plt.show()
+    # plt.savefig('img/test_6_1.png')
 
     
     H = alg.graph_simplify(G)
@@ -38,8 +38,8 @@ def main():
     nx.draw_networkx_edges(H, pos, edgelist=[(path_opt[i], path_opt[i+1]) for i in range(len(path_opt)-1)], edge_color='#780000', width=2)
     nx.draw_networkx_labels(H, pos)
 
-    # plt.show()
-    plt.savefig('img/test_6_2.png')
+    plt.show()
+    # plt.savefig('img/test_6_2.png')
 
     input('Naciśnij ENTER, aby zamknąć.')
 
