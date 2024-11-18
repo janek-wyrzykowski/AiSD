@@ -20,7 +20,7 @@ def main():
     nx.draw_networkx_labels(G, pos)
 
     # plt.show()
-    plt.savefig('img/test_3_1.png')
+    plt.savefig('img/test_6_1.png')
 
     
     H = alg.graph_simplify(G)
@@ -39,7 +39,7 @@ def main():
     nx.draw_networkx_labels(H, pos)
 
     # plt.show()
-    plt.savefig('img/test_3_2.png')
+    plt.savefig('img/test_6_2.png')
 
     input('Naciśnij ENTER, aby zamknąć.')
 
