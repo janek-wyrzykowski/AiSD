@@ -18,7 +18,7 @@ def graph_generation():
     # dane losowe:
     if wybor == '2':
         liczba_skrzyzowan = random.randint(3, 100)
-        n = ((liczba_skrzyzowan - 1) * (liczba_skrzyzowan)) / 2
+        n = int(((liczba_skrzyzowan - 1) * (liczba_skrzyzowan)) / 2)
         if n > 300:
             n = 300
 
