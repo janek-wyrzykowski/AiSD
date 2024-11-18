@@ -24,6 +24,7 @@ def graph_generation():
 
         liczba_ulic = random.randint(liczba_skrzyzowan, n)
         ulice = [[0 for i in range(liczba_skrzyzowan)] for i in range(liczba_skrzyzowan)]
+        liczba_wpisanych_ulic = 0
 
         for i in range(2):
             for j in range(liczba_skrzyzowan):
@@ -36,8 +37,9 @@ def graph_generation():
 
                 ulice[j][y] = random.randint(1, 100)
                 ulice[y][j] = ulice[j][y]
+                liczba_wpisanych_ulic += 1
 
-        m = liczba_ulic - liczba_skrzyzowan
+        m = liczba_ulic - liczba_wpisanych_ulic
         if m > 0:
             for _ in range(m):
                 y = random.randint(0, liczba_skrzyzowan - 1)
