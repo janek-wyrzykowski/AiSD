@@ -3,18 +3,21 @@ import random
 import numpy
 
 def graph_generation():
-    print("Projekt 17: kurier \n")
     print("Wybierz metodę wrzucenia danych: \n")
     print("1. Dane wpisywane ręcznie, \n"
-          "2. Dane losowe. \n")
+          "2. Dane losowe. \n"
+          "3. Zakończenie programu.")
     print("Wpisz swój wybór:\n")
     while True:
         wybor = input("")
-        if wybor not in ['1', '2']:
+        if wybor not in ['1', '2', '3']:
             print("Nieprawidłowy wybór. Wpisz 1 lub 2.")
         else:
             break
 
+    # zakończenie programu
+    if wybor == '3':
+        exit()
     # dane losowe:
     if wybor == '2':
         liczba_skrzyzowan = random.randint(3, 100)
@@ -60,18 +63,18 @@ def graph_generation():
 
     # dane wpisane ręcznie
     else:
-        print("Podaj liczbę skrzyżowań (1 <= n <= 100)")
+        print("Podaj liczbę skrzyżowań (3 <= n <= 100)")
         while True:
             liczba_skrzyzowan = int(input(""))
-            if liczba_skrzyzowan < 1 or liczba_skrzyzowan > 100:
+            if liczba_skrzyzowan < 3 or liczba_skrzyzowan > 100:
                 print("Nieprawidłowy wybór. Wpisz liczbę między 1 a 100.")
             else:
                 break
 
-        print("Podaj liczbę ulic (1 <= m <= 300)")
+        print("Podaj liczbę ulic (3 <= m <= 300)")
         while True:
             numer_ulic = int(input())
-            if numer_ulic < 1 or numer_ulic > 300:
+            if numer_ulic < 3 or numer_ulic > 300:
                 print("Nieprawidłowy wybór. Wpisz liczbę między 1 a 300.")
             elif numer_ulic > (((liczba_skrzyzowan-1)*liczba_skrzyzowan)/2):
                 print("Za dużo ulic na zadaną liczbę skrzyżowań!")
