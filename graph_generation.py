@@ -1,6 +1,6 @@
 import networkx as nx
 import random
-import numpy
+import numpy as np
 
 def graph_generation():
     print("Wybierz metodę wrzucenia danych: \n")
@@ -20,12 +20,14 @@ def graph_generation():
         exit()
     # dane losowe:
     if wybor == '2':
-        liczba_skrzyzowan = random.randint(3, 100)
+        ls = input('Podaj liczbę skrzyżowań (3 <= n <= 100) lub wciśnij ENTER, aby była losowa:\n')
+        liczba_skrzyzowan = random.randint(3, 100) if ls == '' else int(ls)
         n = int(((liczba_skrzyzowan - 1) * (liczba_skrzyzowan)) / 2)
         if n > 300:
             n = 300
 
-        liczba_ulic = random.randint(liczba_skrzyzowan, n)
+        lu = input('Podaj liczbę ulic (3 <= m <= 300) lub wciśnij ENTER, aby była losowa:\n')
+        liczba_ulic = random.randint(liczba_skrzyzowan, n) if lu == '' else str(lu)
         ulice = [[0 for i in range(liczba_skrzyzowan)] for i in range(liczba_skrzyzowan)]
         liczba_wpisanych_ulic = 0
 
@@ -124,7 +126,14 @@ def graph_generation():
                 to_visit[i] = 1
         to_visit[1] = 1
 
-    ulice = numpy.array(ulice)
-    ulice = nx.from_numpy_array(ulice, nodelist=range(1, liczba_skrzyzowan+1))
-    nx.set_node_attributes(ulice, to_visit, 'toVisit')
-    return ulice
+    ulice = np.array(ulice)
+    graf = nx.from_numpy_array(ulice, nodelist=range(1, liczba_skrzyzowan+1))
+    nx.set_node_attributes(graf, to_visit, 'toVisit')
+
+    match input('W jaki sposób chcesz mieć podaną macierz incydencji?\n1. Wypisana w konsoli,\n2. Wypisana do pliku ulice.txt,\nlub wciśnij ENTER, żeby pominąć:\n'):
+        case '1':
+            print(ulice)
+        case '2':
+            np.savetxt('ulice.txt', ulice, fmt='%d', delimiter='\t')
+
+    return graf
