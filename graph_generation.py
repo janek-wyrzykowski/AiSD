@@ -20,14 +20,38 @@ def graph_generation():
         exit()
     # dane losowe:
     if wybor == '2':
-        ls = input('Podaj liczbę skrzyżowań (3 <= n <= 100) lub wciśnij ENTER, aby była losowa:\n')
-        liczba_skrzyzowan = random.randint(3, 100) if ls == '' else int(ls)
+        print('Podaj liczbę skrzyżowań (3 <= n <= 100) lub wciśnij ENTER, aby była losowa:')
+        while True:
+            ls = input()
+            if ls == '':
+                liczba_skrzyzowan = random.randint(3, 100)
+                break
+            try:
+                liczba_skrzyzowan = int(ls)
+                assert 3 <= liczba_skrzyzowan <= 100
+            except:
+                print('Niepoprawne dane. Podaj liczbę skrzyżowań jeszcze raz.')
+            else:
+                break
+
         n = int(((liczba_skrzyzowan - 1) * (liczba_skrzyzowan)) / 2)
         if n > 300:
             n = 300
 
-        lu = input('Podaj liczbę ulic (3 <= m <= 300) lub wciśnij ENTER, aby była losowa:\n')
-        liczba_ulic = random.randint(liczba_skrzyzowan, n) if lu == '' else str(lu)
+        print('Podaj liczbę ulic (n <= m <= 300) lub wciśnij ENTER, aby była losowa:')
+        while True:
+            lu = input()
+            if lu == '':
+                liczba_ulic = random.randint(3, 300)
+                break
+            try:
+                liczba_ulic = int(lu)
+                assert liczba_skrzyzowan <= liczba_ulic <= n
+            except:
+                print('Niepoprawne dane. Podaj liczbę ulic jeszcze raz.')
+            else:
+                break
+
         ulice = [[0 for i in range(liczba_skrzyzowan)] for i in range(liczba_skrzyzowan)]
         liczba_wpisanych_ulic = 0
 
@@ -69,7 +93,7 @@ def graph_generation():
         while True:
             liczba_skrzyzowan = int(input(""))
             if liczba_skrzyzowan < 3 or liczba_skrzyzowan > 100:
-                print("Nieprawidłowy wybór. Wpisz liczbę między 1 a 100.")
+                print("Nieprawidłowy wybór. Wpisz liczbę między 3 a 100.")
             else:
                 break
 
@@ -77,7 +101,7 @@ def graph_generation():
         while True:
             numer_ulic = int(input())
             if numer_ulic < 3 or numer_ulic > 300:
-                print("Nieprawidłowy wybór. Wpisz liczbę między 1 a 300.")
+                print("Nieprawidłowy wybór. Wpisz liczbę między 3 a 300.")
             elif numer_ulic > (((liczba_skrzyzowan-1)*liczba_skrzyzowan)/2):
                 print("Za dużo ulic na zadaną liczbę skrzyżowań!")
             elif numer_ulic < liczba_skrzyzowan:
