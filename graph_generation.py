@@ -131,7 +131,7 @@ def graph_generation():
             ulice[podane[1]-1][podane[0]-1] = podane[2]
 
         print('Przechodzimy do wybrania skrzyżowań do których musi dojechać kurier.')
-        print('Proszę najpierw podać liczbę skrzyżowań, które musi odwiedzić dostawca:')
+        print('Proszę najpierw podać liczbę skrzyżowań, które musi odwiedzić dostawca BEZ UWZGLĘDNIANIA BAZY:')
         liczba_do_odwiedzenia = int(input(''))
         while  0 >= liczba_do_odwiedzenia or liczba_do_odwiedzenia >= 20 or liczba_do_odwiedzenia > liczba_skrzyzowan:
             print('Niepoprawna liczba skrzyżowań do odwiedzenia. Wpisz liczbę ponownie.')
