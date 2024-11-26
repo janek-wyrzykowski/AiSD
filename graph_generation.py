@@ -11,7 +11,7 @@ def graph_generation():
     while True:
         wybor = input("")
         if wybor not in ['1', '2', '3']:
-            print("Nieprawidłowy wybór. Wpisz 1 lub 2.")
+            print("Nieprawidłowy wybór. Wpisz 1, 2 lub 3.")
         else:
             break
 
